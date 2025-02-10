@@ -192,22 +192,13 @@ y                <meta charset="UTF-8">
                         }
 
                         let rightArm = avatar.getObjectByName("RightArm");
-
-                        if (rightArm) {
-                          let swingAngle = Math.cos(time * 1.5) * 0.2;
-                          swingAngle += 1.18;
-                          rightArm.rotation.x = swingAngle;
-                        }
-
                         let leftArm = avatar.getObjectByName("LeftArm");
 
-                        if (leftArm) {
-                          let swingAngle = Math.cos(time * 1.5) * 0.2;
-                          swingAngle += 1.18;
-                          leftArm.rotation.x = swingAngle;
-                        }
-                    }
-                        
+                       if (rightArm && leftArm) {
+                          rightArm.rotation.x = 1.4 + Math.cos(time * 1.5) * 0.1;
+                          leftArm.rotation.x = 1.4 + Math.cos(time * 1.5) * 0.1;
+                        }  
+                    }   
                     renderer.render(scene, camera);
                   }
 
