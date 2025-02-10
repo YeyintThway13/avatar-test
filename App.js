@@ -7,7 +7,8 @@ const App = () => {
   const didkey = "eWV5aW50dGh3YXk2NTZAZ21haWwuY29t:0o5PouE4ZdE_WBknyRqFn"
 
   const [avatarURL, setAvatarURL] = useState(
-    'https://models.readyplayer.me/67962016903a9b0149b2ee08.glb' // Replace with your Ready Player Me avatar URL
+    'https://models.readyplayer.me/67aa1758b178c83b39d7d292.glb',
+    // 'https://models.readyplayer.me/67962016903a9b0149b2ee08.glb' // Replace with your Ready Player Me avatar URL
   );
   const webviewRef = useRef(null);
   const paragraph =
@@ -119,7 +120,7 @@ y                <meta charset="UTF-8">
                     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
                     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
                     renderer.setSize(window.innerWidth, window.innerHeight);
-                    renderer.setClearColor(0xffffff, 1);
+                    renderer.setClearColor(0x1a1a2e, 1);
                     renderer.shadowMap.enabled = true;
                     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                     renderer.outputEncoding = THREE.sRGBEncoding;
@@ -127,7 +128,7 @@ y                <meta charset="UTF-8">
                     renderer.toneMappingExposure = 1.0;
                     document.body.appendChild(renderer.domElement);
 
-                    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+                    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
                     scene.add(ambientLight);
                     
                     const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -148,8 +149,8 @@ y                <meta charset="UTF-8">
                     loader.load('${avatarURL}',
                       function (gltf) {
                         avatar = gltf.scene;
-                        avatar.position.set(0, 0, 0);
-                        avatar.scale.set(1, 1, 1);
+                        avatar.position.set(0, -0.4, 0);
+                        avatar.scale.set(0.75, 0.75, 0.75);
                         avatar.traverse((node) => {
                           if (node.isMesh) {
                             node.castShadow = true;
@@ -177,9 +178,36 @@ y                <meta charset="UTF-8">
                     camera.updateProjectionMatrix();
                     renderer.setSize(window.innerWidth, window.innerHeight);
                   }
+                  let time = 0;
 
                   function animate() {
                     requestAnimationFrame(animate);
+
+                     if (avatar) {
+                        time += 0.05;
+
+                        let head = avatar.getObjectByName("Head");
+                        if (head) {
+                            head.rotation.x = Math.sin(time * 0.5) * 0.02;
+                        }
+
+                        let rightArm = avatar.getObjectByName("RightArm");
+
+                        if (rightArm) {
+                          let swingAngle = Math.cos(time * 1.5) * 0.2;
+                          swingAngle += 1.18;
+                          rightArm.rotation.x = swingAngle;
+                        }
+
+                        let leftArm = avatar.getObjectByName("LeftArm");
+
+                        if (leftArm) {
+                          let swingAngle = Math.cos(time * 1.5) * 0.2;
+                          swingAngle += 1.18;
+                          leftArm.rotation.x = swingAngle;
+                        }
+                    }
+                        
                     renderer.render(scene, camera);
                   }
 
@@ -305,11 +333,13 @@ y                <meta charset="UTF-8">
                     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                   }
                 </style>
-                <div id="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333;">Loading avatar...</div>
+               <div id="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #333;">Loading avatar...</div>
+                
               </body>
             </html>
           `,
         }}
+        
         javaScriptEnabled={true}
         onMessage={(event) => {
           console.log('Message from WebView:', event.nativeEvent.data);
