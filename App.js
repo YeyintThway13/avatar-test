@@ -188,7 +188,7 @@ y                <meta charset="UTF-8">
 
                         let head = avatar.getObjectByName("Head");
                         if (head) {
-                            head.rotation.x = Math.sin(time * 0.5) * 0.02;
+                            head.rotation.x = Math.cos(time * 1.5) * 0.1;
                         }
 
                         let rightArm = avatar.getObjectByName("RightArm");
