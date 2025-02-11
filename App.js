@@ -188,15 +188,15 @@ y                <meta charset="UTF-8">
 
                         let head = avatar.getObjectByName("Head");
                         if (head) {
-                            head.rotation.x = Math.cos(time * 1.5) * 0.1;
+                            head.rotation.x = Math.cos(time * 0.5) * 0.05;
                         }
 
                         let rightArm = avatar.getObjectByName("RightArm");
                         let leftArm = avatar.getObjectByName("LeftArm");
 
                        if (rightArm && leftArm) {
-                          rightArm.rotation.x = 1.4 + Math.cos(time * 1.5) * 0.1;
-                          leftArm.rotation.x = 1.4 + Math.cos(time * 1.5) * 0.1;
+                          rightArm.rotation.x = 1.4 + Math.cos(time * 0.3) * 0.01;
+                          leftArm.rotation.x = 1.4 + Math.cos(time * 0.3) * 0.01;
                         }  
                     }   
                     renderer.render(scene, camera);
