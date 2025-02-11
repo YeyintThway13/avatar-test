@@ -7,17 +7,26 @@ const App = () => {
   const didkey = "eWV5aW50dGh3YXk2NTZAZ21haWwuY29t:0o5PouE4ZdE_WBknyRqFn"
 
   const [avatarURL, setAvatarURL] = useState(
-    'https://models.readyplayer.me/67aa1758b178c83b39d7d292.glb',
+    'https://models.readyplayer.me/67abb254a7c7d58e19d1874c.glb',
     // 'https://models.readyplayer.me/67962016903a9b0149b2ee08.glb' // Replace with your Ready Player Me avatar URL
   );
   const webviewRef = useRef(null);
   const paragraph =
     "Newspapers keep people informed about what is happening around the world. These changes make the avatar's lip movements more synchronized with the speech, creating a more natural and responsive lip-sync animation. The mouth movements are now faster and better matched to the voice timing.";
-
+  const [selectedVoice, setSelectedVoice] = useState(null);
+  
   useEffect(() => {
     // Initialize Text-to-Speech
     Speech.getAvailableVoicesAsync().then(voices => {
       console.log('Available voices:', voices);
+
+      const femaleVoice = voices.find(voice =>
+        voice.gender === 'female' || voice.name.toLowerCase().includes('female')
+      );
+
+      if (femaleVoice) {
+        setSelectedVoice(femaleVoice.identifier);
+      }
     });
   }, []);
 
@@ -65,6 +74,7 @@ const App = () => {
       language: 'en-US',
       rate: speechRate,
       pitch: 1.0,
+      voice: selectedVoice,
       onStart: () => {
         webviewRef.current.postMessage(
           JSON.stringify({
@@ -195,8 +205,8 @@ y                <meta charset="UTF-8">
                         let leftArm = avatar.getObjectByName("LeftArm");
 
                        if (rightArm && leftArm) {
-                          rightArm.rotation.x = 1.4 + Math.cos(time * 0.3) * 0.01;
-                          leftArm.rotation.x = 1.4 + Math.cos(time * 0.3) * 0.01;
+                          rightArm.rotation.x = 1.2 + Math.cos(time * 0.3) * 0.01;
+                          leftArm.rotation.x = 1.2 + Math.cos(time * 0.3) * 0.01;
                         }  
                     }   
                     renderer.render(scene, camera);
