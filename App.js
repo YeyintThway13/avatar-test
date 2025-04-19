@@ -19,7 +19,7 @@ export default function App() {
           input: { text: text },
           voice: {
             languageCode: 'en-US',
-            name: 'en-US-Wavenet-D', // Neural voice
+            name: 'en-US-Wavenet-C', // Neural voice
           },
           audioConfig: {
             audioEncoding: 'MP3',
